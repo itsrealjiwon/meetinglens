@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 👁️ MeetingLens
 
-## Getting Started
+Stop re-reading meeting transcripts. MeetingLens takes raw meeting notes and pulls out what actually matters — action items, decisions, key discussion points, and follow-ups.
 
-First, run the development server:
+![MeetingLens](proof/commit-log.png)
 
-```bash
+## The problem
+
+Meetings generate walls of text. Important decisions get buried. Action items are forgotten by EOD.
+
+## The solution
+
+Paste your meeting notes → get structured output:
+
+- **Key Decisions** — What was decided
+- **Action Items** — Who does what by when
+- **Discussion Summary** — Condensed from verbose notes
+- **Follow-ups** — What needs another meeting
+- **Sentiment Pulse** — Overall team mood from the discussion
+
+## Getting started
+
+```
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `localhost:3000`, paste your notes, click Analyze.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What's under the hood
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Component | Choice |
+|-----------|--------|
+| Runtime | Next.js 16 (App Router) |
+| Styling | Tailwind CSS 4 |
+| Types | TypeScript |
+| AI | MiMo v2.5 Pro |
+| Layout | Split-panel (input left, analysis right) |
 
-## Learn More
+## API
 
-To learn more about Next.js, take a look at the following resources:
+```typescript
+POST /api/analyze
+Body: { notes: string }
+Response: { summary: string, actions: string[], decisions: string[] }
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## File map
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/app/
+├── api/analyze/route.ts    meeting analysis endpoint
+├── page.tsx                main interface
+├── globals.css             dark teal theme
+└── layout.tsx              root shell
+```
 
-## Deploy on Vercel
+## Visual style
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Dark background (#0f172a) with teal accents (#14b8a6). Clean cards, minimal borders. The UI stays out of your way — the content is the focus.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Built with **MiMo v2.5 Pro** by Xiaomi → [huggingface.co/XiaomiMiMo](https://huggingface.co/XiaomiMiMo)
+
+*Crafted with MiMo v2.5 Pro*
+
+MIT
